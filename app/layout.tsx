@@ -7,13 +7,14 @@ import { ResizeObserverFix } from "@/components/resize-observer-fix"
 import { SmoothScroll } from "@/components/motion/smooth-scroll"
 import { Cursor } from "@/components/motion/cursor"
 import { RevealObserver } from "@/components/motion/reveal"
+import { getSiteUrl } from "@/lib/site-url"
 import "./globals.css"
 
 const archivo = Archivo({ subsets: ["latin"], variable: "--font-archivo", display: "swap" })
 const archivoBlack = Archivo_Black({ subsets: ["latin"], weight: "400", variable: "--font-archivo-black", display: "swap" })
 const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono", display: "swap" })
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://aigentsmith.app"
+const SITE_URL = getSiteUrl()
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

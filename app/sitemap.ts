@@ -1,8 +1,9 @@
 import { createClient } from "@/lib/supabase/server"
+import { getSiteUrl } from "@/lib/site-url"
 import type { MetadataRoute } from "next"
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://aigent-smith.com"
+  const baseUrl = getSiteUrl()
   const supabase = await createClient()
 
   // Fetch all tools for dynamic URLs
