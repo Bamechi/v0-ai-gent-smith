@@ -13,10 +13,20 @@ const archivo = Archivo({ subsets: ["latin"], variable: "--font-archivo", displa
 const archivoBlack = Archivo_Black({ subsets: ["latin"], weight: "400", variable: "--font-archivo-black", display: "swap" })
 const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono", display: "swap" })
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://aigentsmith.app"
+const DEFAULT_SITE_URL = "https://aigentsmith.app"
+
+function getSiteUrl() {
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || DEFAULT_SITE_URL
+
+  try {
+    return new URL(siteUrl)
+  } catch {
+    return new URL(DEFAULT_SITE_URL)
+  }
+}
 
 export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL),
+  metadataBase: getSiteUrl(),
   title: {
     default: "AiGENT SMITH | The AI tools directory, updated weekly",
     template: "%s | AiGENT SMITH",
