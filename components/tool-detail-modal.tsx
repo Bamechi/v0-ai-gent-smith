@@ -1,11 +1,11 @@
 "use client"
 
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { ExternalLink, Star, Calendar, Tag } from "lucide-react"
+import { useState } from "react"
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
+import { ExternalLink, Star, Link2, Check } from "lucide-react"
 import type { AITool } from "@/lib/types"
-import Link from "next/link"
+import { ToolPreview } from "./tool-preview"
+import { hostOf } from "@/lib/preview"
 
 interface ToolDetailModalProps {
   tool: AITool | null
@@ -14,135 +14,85 @@ interface ToolDetailModalProps {
 }
 
 export function ToolDetailModal({ tool, open, onOpenChange }: ToolDetailModalProps) {
+  const [copied, setCopied] = useState(false)
   if (!tool) return null
+
+  const copy = async () => {
+    try { await navigator.clipboard.writeText(tool.url); setCopied(true); setTimeout(() => setCopied(false), 1500) } catch {}
+  }
+  const cats = [tool.category_1, tool.category_2, tool.category_3].filter(Boolean) as string[]
+  const pricing = tool.pricing || tool.tags?.find((t) => /^\$?(free|freemium|paid|trial)/i.test(t)) || "See site"
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-3xl max-h-[85vh] overflow-y-auto">
-        <DialogHeader>
-          <div className="flex items-start justify-between gap-4">
-            <div className="flex-1">
-              <DialogTitle className="text-3xl font-black uppercase tracking-tight">{tool.app_name}</DialogTitle>
-              {tool.featured_today && (
-                <Badge className="mt-2 bg-primary/20 text-primary border-primary/30">
-                  <Star className="mr-1 h-3 w-3 fill-primary" />
-                  Featured Today
-                </Badge>
+      <DialogContent className="max-h-[92vh] w-[calc(100vw-2rem)] max-w-3xl gap-0 overflow-hidden overflow-y-auto border border-line bg-white p-0 text-ink sm:rounded-2xl">
+        <ToolPreview tool={tool} />
+
+        <div className="space-y-7 p-6 sm:p-8">
+          <div className="flex flex-wrap items-start justify-between gap-4">
+            <div className="min-w-0">
+              <DialogTitle className="font-display text-3xl leading-[0.95] tracking-tight text-ink sm:text-4xl">{tool.app_name}</DialogTitle>
+              <div className="mono mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-ink-mute">
+                <span>{hostOf(tool.url)}</span>
+                {tool.featured_today && <span className="font-semibold text-green">App of the day</span>}
+                {tool.sponsored && <span>Sponsored</span>}
+              </div>
+            </div>
+            <div className="flex items-center gap-2 rounded-lg border border-line bg-green-tint/40 px-3 py-2">
+              <Star className={`h-4 w-4 ${tool.star_rating ? "fill-green text-green" : "text-ink-mute"}`} />
+              {tool.star_rating ? (
+                <>
+                  <span className="font-display text-lg">{tool.star_rating.toFixed(1)}</span>
+                  {tool.review_count ? <span className="mono text-xs text-ink-mute">({tool.review_count.toLocaleString()})</span> : null}
+                </>
+              ) : (
+                <span className="mono text-xs text-ink-mute">Unrated</span>
               )}
             </div>
           </div>
-        </DialogHeader>
 
-        <div className="space-y-6">
-          {/* Rating Section */}
-          {tool.star_rating && (
-            <div className="flex items-center gap-4 rounded-lg bg-secondary/50 p-4">
-              <div className="flex items-center gap-1">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <Star
-                    key={i}
-                    className={`h-5 w-5 ${
-                      i < Math.floor(tool.star_rating!) ? "fill-primary text-primary" : "text-muted-foreground/30"
-                    }`}
-                  />
-                ))}
-              </div>
-              <div className="flex items-baseline gap-2">
-                <span className="text-2xl font-bold">{tool.star_rating.toFixed(1)}</span>
-                <span className="text-sm text-muted-foreground">({tool.review_count?.toLocaleString()} reviews)</span>
-              </div>
-            </div>
-          )}
+          <p className="mono-description max-w-[62ch] text-[15px] text-ink-soft">{tool.short_description}</p>
 
-          {/* Description */}
-          <div>
-            <h4 className="mb-2 text-sm font-bold uppercase tracking-wide">Description</h4>
-            <p className="mono-description text-foreground/90 leading-relaxed">{tool.short_description}</p>
-          </div>
+          <dl className="grid grid-cols-2 gap-x-6 gap-y-5 border-y border-line py-5 sm:grid-cols-4">
+            <Meta label="Pricing" value={pricing} />
+            <Meta label="Platforms" value={tool.platforms || "Web"} />
+            <Meta label="Added" value={tool.date_added ? new Date(tool.date_added).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : "—"} />
+            <Meta label="Category" value={tool.category_1 || "—"} />
+          </dl>
 
-          {/* Categories */}
-          <div>
-            <h4 className="mb-3 flex items-center gap-2 text-sm font-bold uppercase tracking-wide">
-              <Tag className="h-4 w-4" />
-              Categories
-            </h4>
+          {cats.length > 0 && (
             <div className="flex flex-wrap gap-2">
-              {tool.category_1 && (
-                <Badge variant="default" className="text-sm font-bold">
-                  {tool.category_1}
-                </Badge>
-              )}
-              {tool.category_2 && (
-                <Badge variant="secondary" className="text-sm font-bold">
-                  {tool.category_2}
-                </Badge>
-              )}
-              {tool.category_3 && (
-                <Badge variant="outline" className="text-sm font-bold">
-                  {tool.category_3}
-                </Badge>
-              )}
-            </div>
-          </div>
-
-          {/* Tags */}
-          {tool.tags && tool.tags.length > 0 && (
-            <div>
-              <h4 className="mb-3 text-sm font-bold uppercase tracking-wide">Tags</h4>
-              <div className="flex flex-wrap gap-2">
-                {tool.tags.map((tag, idx) => (
-                  <Badge key={idx} variant="outline" className="mono-description">
-                    {tag}
-                  </Badge>
-                ))}
-              </div>
+              {cats.map((c) => <span key={c} className="rounded-md bg-green px-3 py-1.5 font-sans text-xs font-semibold text-white">{c}</span>)}
+              {tool.tags?.map((t) => <span key={t} className="rounded-md border border-line bg-green-tint/50 px-3 py-1.5 font-sans text-xs text-ink-soft">{t}</span>)}
             </div>
           )}
 
-          {/* Additional Info */}
-          <div className="grid gap-4 sm:grid-cols-2">
-            <div>
-              <h4 className="mb-2 text-sm font-bold uppercase tracking-wide">Pricing</h4>
-              <p className="mono-description text-muted-foreground font-bold text-[#004208]">
-                {tool.pricing || "$Freemium"}
-              </p>
-            </div>
-            {tool.platforms && (
-              <div>
-                <h4 className="mb-2 text-sm font-bold uppercase tracking-wide">Platforms</h4>
-                <p className="mono-description text-muted-foreground">{tool.platforms}</p>
-              </div>
-            )}
-            {tool.date_added && (
-              <div>
-                <h4 className="mb-2 flex items-center gap-2 text-sm font-bold uppercase tracking-wide">
-                  <Calendar className="h-4 w-4" />
-                  Added
-                </h4>
-                <p className="mono-description text-muted-foreground">
-                  {new Date(tool.date_added).toLocaleDateString()}
-                </p>
-              </div>
-            )}
-          </div>
-
-          {/* Promo Code */}
           {tool.promo_code && (
-            <div className="rounded-lg border-2 border-primary/30 bg-primary/5 p-4">
-              <h4 className="mb-2 text-sm font-bold uppercase tracking-wide">Promo Code</h4>
-              <code className="rounded bg-background px-3 py-1 text-lg font-mono font-bold">{tool.promo_code}</code>
+            <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-green/40 bg-green-tint p-4">
+              <span className="mono text-xs tracking-[0.14em] text-ink-mute">PROMO CODE</span>
+              <code className="font-display text-xl text-green">{tool.promo_code}</code>
             </div>
           )}
 
-          {/* CTA Button */}
-          <Button asChild size="lg" className="w-full text-lg font-black uppercase">
-            <Link href={tool.url} target="_blank" rel="noopener noreferrer">
-              Visit {tool.app_name}
-              <ExternalLink className="ml-2 h-5 w-5" />
-            </Link>
-          </Button>
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <a href={tool.url} target="_blank" rel="noopener noreferrer" className="inline-flex h-12 flex-1 items-center justify-center gap-2 rounded-lg bg-green font-display text-sm text-white transition-colors hover:bg-green-deep">
+              Visit {tool.app_name} <ExternalLink className="h-4 w-4" />
+            </a>
+            <button onClick={copy} className="inline-flex h-12 items-center justify-center gap-2 rounded-lg border border-line px-5 font-sans text-sm text-ink transition-colors hover:border-green hover:text-green">
+              {copied ? <Check className="h-4 w-4" /> : <Link2 className="h-4 w-4" />} {copied ? "Copied" : "Copy link"}
+            </button>
+          </div>
         </div>
       </DialogContent>
     </Dialog>
+  )
+}
+
+function Meta({ label, value }: { label: string; value: string }) {
+  return (
+    <div>
+      <dt className="mono text-[11px] tracking-[0.16em] text-ink-mute">{label.toUpperCase()}</dt>
+      <dd className="mt-1 truncate font-sans text-sm font-semibold text-ink" title={value}>{value}</dd>
+    </div>
   )
 }

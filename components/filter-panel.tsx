@@ -70,19 +70,19 @@ export function FilterPanel({ filters, onFiltersChange, availableCategories, ava
       {/* Categories Filter */}
       <Popover>
         <PopoverTrigger asChild>
-          <Button size="sm" className="gap-2 bg-gray-100 text-black hover:bg-gray-200 border border-gray-300">
+          <Button size="sm" className="h-12 gap-2 rounded-xl border border-line bg-white px-4 font-sans text-sm font-medium text-ink shadow-sm hover:border-green/50 hover:bg-green-tint/40 hover:text-ink">
             <Filter className="h-4 w-4" />
             Categories
             {filters.categories.length > 0 && (
-              <Badge className="ml-1 h-5 w-5 rounded-full p-0 text-xs bg-black text-white">
+              <Badge className="ml-1 h-5 w-5 rounded-full p-0 text-xs bg-green text-white">
                 {filters.categories.length}
               </Badge>
             )}
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-80 bg-white border-2 border-[#004208]/20" align="start">
+        <PopoverContent className="w-80 rounded-xl border border-line bg-white shadow-xl" align="start">
           <div className="space-y-4">
-            <h4 className="font-semibold leading-none text-[#004208]">Categories</h4>
+            <h4 className="font-display text-sm text-ink">Categories</h4>
             <div className="max-h-80 space-y-3 overflow-y-auto">
               {availableCategories.map((category) => (
                 <div key={category} className="flex items-center space-x-2">
@@ -90,11 +90,11 @@ export function FilterPanel({ filters, onFiltersChange, availableCategories, ava
                     id={`cat-${category}`}
                     checked={filters.categories.includes(category)}
                     onCheckedChange={() => handleCategoryToggle(category)}
-                    className="border-[#004208]/50 data-[state=checked]:bg-[#004208] data-[state=checked]:border-[#004208]"
+                    className="border-ink/30 data-[state=checked]:bg-green data-[state=checked]:border-green data-[state=checked]:text-white"
                   />
                   <Label
                     htmlFor={`cat-${category}`}
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer text-black"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer text-ink-soft"
                   >
                     {category}
                   </Label>
@@ -108,17 +108,17 @@ export function FilterPanel({ filters, onFiltersChange, availableCategories, ava
       {/* Tags Filter */}
       <Popover>
         <PopoverTrigger asChild>
-          <Button size="sm" className="gap-2 bg-gray-100 text-black hover:bg-gray-200 border border-gray-300">
+          <Button size="sm" className="h-12 gap-2 rounded-xl border border-line bg-white px-4 font-sans text-sm font-medium text-ink shadow-sm hover:border-green/50 hover:bg-green-tint/40 hover:text-ink">
             <Filter className="h-4 w-4" />
             Tags
             {filters.tags.length > 0 && (
-              <Badge className="ml-1 h-5 w-5 rounded-full p-0 text-xs bg-black text-white">{filters.tags.length}</Badge>
+              <Badge className="ml-1 h-5 w-5 rounded-full p-0 text-xs bg-green text-white">{filters.tags.length}</Badge>
             )}
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-96 bg-white border-2 border-[#004208]/20" align="start">
+        <PopoverContent className="w-96 rounded-xl border border-line bg-white shadow-xl" align="start">
           <div className="space-y-4">
-            <h4 className="font-semibold leading-none text-[#004208]">Tags</h4>
+            <h4 className="font-display text-sm text-ink">Tags</h4>
             <div className="max-h-80 overflow-y-auto">
               <div className="flex flex-wrap gap-2">
                 {displayTags.map((displayTag) => {
@@ -128,10 +128,10 @@ export function FilterPanel({ filters, onFiltersChange, availableCategories, ava
                     <button
                       key={displayTag}
                       onClick={() => handleTagToggle(originalTag)}
-                      className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200 ${
+                      className={`px-3 py-1.5 rounded-lg font-sans text-xs font-medium transition-all duration-200 ${
                         isSelected
-                          ? 'bg-[#c8e6c9] text-[#004208] border-2 border-[#004208]'
-                          : 'bg-[#e8f5e9] text-[#004208] border-2 border-[#004208]/30 hover:border-[#004208]'
+                          ? 'bg-green text-white border border-green'
+                          : 'bg-white text-ink-soft border border-line hover:border-green/50 hover:text-ink'
                       }`}
                     >
                       {displayTag}
@@ -149,7 +149,7 @@ export function FilterPanel({ filters, onFiltersChange, availableCategories, ava
         <>
           <div className="flex flex-wrap gap-2">
             {filters.categories.map((category) => (
-              <Badge key={category} className="gap-1 bg-black text-white hover:bg-[#00ff41] hover:text-black">
+              <Badge key={category} className="gap-1 rounded-md bg-green text-white hover:bg-green-deep">
                 {category}
                 <button onClick={() => handleCategoryToggle(category)} className="ml-1 rounded-full hover:bg-white/20">
                   <X className="h-3 w-3" />
@@ -157,7 +157,7 @@ export function FilterPanel({ filters, onFiltersChange, availableCategories, ava
               </Badge>
             ))}
             {filters.tags.map((tag) => (
-              <Badge key={tag} className="gap-1 bg-black text-white hover:bg-[#00ff41] hover:text-black">
+              <Badge key={tag} className="gap-1 rounded-md bg-green text-white hover:bg-green-deep">
                 {tag}
                 <button onClick={() => handleTagToggle(tag)} className="ml-1 rounded-full hover:bg-white/20">
                   <X className="h-3 w-3" />
@@ -169,7 +169,7 @@ export function FilterPanel({ filters, onFiltersChange, availableCategories, ava
             variant="ghost"
             size="sm"
             onClick={clearAllFilters}
-            className="text-black hover:text-[#00ff41] hover:bg-gray-100"
+            className="text-ink-mute hover:text-green hover:bg-green-tint"
           >
             Clear all
           </Button>

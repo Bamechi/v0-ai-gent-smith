@@ -1,12 +1,13 @@
 {
-  "name": "my-v0-project",
+  "name": "aigent-smith",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "build": "next build",
     "dev": "next dev",
     "lint": "eslint .",
-    "start": "next start"
+    "start": "next start",
+    "sync:tools": "node automation/sync-sheet-to-supabase.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
@@ -61,8 +62,8 @@
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7",
     "vaul": "^1.1.2",
-    "vue-router": "latest",
-    "zod": "3.25.76"
+    "zod": "3.25.76",
+    "lenis": "^1.3.4"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.9",

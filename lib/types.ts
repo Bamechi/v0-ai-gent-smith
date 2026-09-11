@@ -19,6 +19,10 @@ export interface AITool {
   created_at: string
   star_rating: number | null
   review_count: number | null
+  /** Optional curated preview (screenshot or OG image). Populated by the weekly sync. */
+  preview_image_url?: string | null
+  /** published | pending | rejected — only `published` is shown publicly. */
+  status?: string | null
 }
 
 export type ViewMode = "table" | "cards"

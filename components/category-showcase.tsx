@@ -1,53 +1,37 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
-
 interface CategoryShowcaseProps {
   categories: string[]
+  counts?: Record<string, number>
   onCategorySelect: (category: string) => void
   selectedCategory?: string
 }
 
-const CATEGORY_LIST = [
-  "Video (Create & Edit)",
-  "Images (Create & Edit)",
-  "Audio / Voice / Music",
-  "Meetings (Transcription & Action Items)",
-  "Productivity & Notes",
-  "Revenue (Sales & Commerce)",
-]
-
-export function CategoryShowcase({ categories, onCategorySelect, selectedCategory }: CategoryShowcaseProps) {
+/** Category rail — every category with counts, high-contrast active state. */
+export function CategoryShowcase({ categories, counts = {}, onCategorySelect, selectedCategory }: CategoryShowcaseProps) {
+  const ordered = [...categories].sort((a, b) => (counts[b] || 0) - (counts[a] || 0))
   return (
-    <div className="space-y-6 py-8">
-      <div className="text-center space-y-3">
-        <h2 className="text-4xl font-black uppercase tracking-tight md:text-5xl text-[#004208]">Trending Tools</h2>
-        <p className="text-lg mono-description text-black max-w-2xl mx-auto">
-          The most useful AI tools — organized and categorized in one spot.
-        </p>
-      </div>
-
-      <div className="flex flex-wrap items-center justify-center gap-3 px-4">
-        {CATEGORY_LIST.map((category) => {
-          const isSelected = selectedCategory === category
-
-          return (
-            <Button
-              key={category}
-              size="lg"
-              onClick={() => onCategorySelect(category)}
-              className={`font-bold text-sm uppercase tracking-wide transition-all ${
-                isSelected
-                  ? "bg-white text-black shadow-lg border-2 border-black"
-                  : /* Updated button background to #004208 */
-                    "bg-[#004208] text-white hover:bg-white hover:text-black border-2 border-transparent hover:border-black"
-              }`}
-            >
-              {category}
-            </Button>
-          )
-        })}
+    <div className="-mx-5 overflow-x-auto px-5 pb-1 sm:-mx-8 sm:px-8 lg:-mx-12 lg:px-12 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <div className="flex w-max gap-2">
+        <Chip active={!selectedCategory} onClick={() => selectedCategory && onCategorySelect(selectedCategory)} label="All" />
+        {ordered.map((c) => (
+          <Chip key={c} active={selectedCategory === c} onClick={() => onCategorySelect(c)} label={c} count={counts[c]} />
+        ))}
       </div>
     </div>
+  )
+}
+
+function Chip({ active, onClick, label, count }: { active: boolean; onClick: () => void; label: string; count?: number }) {
+  return (
+    <button
+      onClick={onClick}
+      className={`flex h-10 items-center gap-2 whitespace-nowrap rounded-full border px-4 font-sans text-sm font-medium transition-all ${
+        active ? "border-green bg-green text-white shadow-[0_8px_24px_rgba(15,138,62,0.3)]" : "border-line bg-white text-ink-soft hover:border-green/50 hover:text-ink"
+      }`}
+    >
+      {label}
+      {count !== undefined && <span className={`mono text-[11px] ${active ? "text-white/70" : "text-ink-mute"}`}>{count}</span>}
+    </button>
   )
 }

@@ -82,13 +82,13 @@ export function DictionaryContent() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="grid-bg min-h-screen bg-paper pt-16">
       <Header />
 
       <main className="container mx-auto px-4 py-12">
         {/* Hero Section */}
         <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 bg-[#004208]/10 text-[#004208] px-4 py-2 rounded-full text-sm font-medium mb-6">
+          <div className="inline-flex items-center gap-2 bg-green/10 text-green px-4 py-2 rounded-full text-sm font-medium mb-6">
             <BookOpen className="h-4 w-4" />
             <span>150 AI Terms & Definitions</span>
           </div>
@@ -129,7 +129,7 @@ export function DictionaryContent() {
             <Button
               variant={sortOption === "a-z" ? "default" : "outline"}
               onClick={() => handleSortChange("a-z")}
-              className={sortOption === "a-z" ? "bg-[#004208] hover:bg-[#004208]/90" : ""}
+              className={sortOption === "a-z" ? "bg-green hover:bg-green-deep" : ""}
             >
               <SortAsc className="h-4 w-4 mr-2" />
               A-Z
@@ -137,7 +137,7 @@ export function DictionaryContent() {
             <Button
               variant={sortOption === "z-a" ? "default" : "outline"}
               onClick={() => handleSortChange("z-a")}
-              className={sortOption === "z-a" ? "bg-[#004208] hover:bg-[#004208]/90" : ""}
+              className={sortOption === "z-a" ? "bg-green hover:bg-green-deep" : ""}
             >
               <SortDesc className="h-4 w-4 mr-2" />
               Z-A
@@ -166,7 +166,7 @@ export function DictionaryContent() {
                   onClick={handleViewMore}
                   variant="outline"
                   size="lg"
-                  className="border-[#004208] text-[#004208] hover:bg-[#004208] hover:text-white px-8 bg-transparent"
+                  className="border-[#0f8a3e] text-green hover:bg-green hover:text-white px-8 bg-transparent"
                 >
                   <span>View More</span>
                   <ChevronDown className="h-4 w-4 ml-2" />

@@ -1,7 +1,9 @@
 import { createClient } from "@/lib/supabase/server"
 import { NextResponse } from "next/server"
+import { isAuthorized } from "@/lib/supabase/admin"
 
-export async function POST() {
+export async function POST(req: Request) {
+  if (!isAuthorized(req)) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   try {
     const supabase = await createClient()
 
@@ -11,7 +13,7 @@ export async function POST() {
     const csvPath = path.join(process.cwd(), "user_read_only_context", "text_attachments", "Aigent_Smith-RRVeQ.csv")
 
     const csvContent = fs.readFileSync(csvPath, "utf-8")
-    const lines = csvContent.split("\n").filter((line) => line.trim())
+    const lines = csvContent.split("\n").filter((line: string) => line.trim())
 
     // Skip header row
     const dataLines = lines.slice(1)

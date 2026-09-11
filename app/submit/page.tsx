@@ -9,7 +9,7 @@ export const metadata = {
 
 export default function SubmitPage() {
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="grid-bg flex min-h-screen flex-col bg-paper pt-16">
       <Header />
 
       <main className="flex-1">

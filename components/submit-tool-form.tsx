@@ -179,42 +179,42 @@ export function SubmitToolForm() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <Card className="bg-white border-2 border-[#004208]/20">
+      <Card className="rounded-2xl border border-line bg-white shadow-[0_20px_60px_rgba(15,138,62,0.08)]">
         <CardHeader>
-          <CardTitle className="text-black">Tool Information</CardTitle>
+          <CardTitle className="font-display text-ink">Tool Information</CardTitle>
           <CardDescription className="text-gray-600">Provide details about your AI tool to help users discover it.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           {/* Tool ID */}
           <div className="space-y-2">
-            <Label htmlFor="toolId" className="text-black font-medium">Tool ID (unique identifier)</Label>
+            <Label htmlFor="toolId" className="text-ink font-medium">Tool ID (unique identifier)</Label>
             <Input
               id="toolId"
               required
               placeholder="e.g., chatbot_myapp"
               value={formData.toolId}
               onChange={(e) => setFormData({ ...formData, toolId: e.target.value })}
-              className="bg-white border-gray-300 text-black placeholder:text-gray-400"
+              className="rounded-lg border-line bg-white text-ink placeholder:text-ink-mute focus-visible:ring-green/30 focus-visible:border-green"
             />
             <p className="text-xs text-gray-500">Use lowercase with underscores. This must be unique.</p>
           </div>
 
           {/* App Name */}
           <div className="space-y-2">
-            <Label htmlFor="appName" className="text-black font-medium">App Name</Label>
+            <Label htmlFor="appName" className="text-ink font-medium">App Name</Label>
             <Input
               id="appName"
               required
               placeholder="Your AI Tool Name"
               value={formData.appName}
               onChange={(e) => setFormData({ ...formData, appName: e.target.value })}
-              className="bg-white border-gray-300 text-black placeholder:text-gray-400"
+              className="rounded-lg border-line bg-white text-ink placeholder:text-ink-mute focus-visible:ring-green/30 focus-visible:border-green"
             />
           </div>
 
           {/* URL */}
           <div className="space-y-2">
-            <Label htmlFor="url" className="text-black font-medium">Website URL</Label>
+            <Label htmlFor="url" className="text-ink font-medium">Website URL</Label>
             <Input
               id="url"
               type="url"
@@ -222,25 +222,25 @@ export function SubmitToolForm() {
               placeholder="https://example.com"
               value={formData.url}
               onChange={(e) => setFormData({ ...formData, url: e.target.value })}
-              className="bg-white border-gray-300 text-black placeholder:text-gray-400"
+              className="rounded-lg border-line bg-white text-ink placeholder:text-ink-mute focus-visible:ring-green/30 focus-visible:border-green"
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="affiliateUrl" className="text-black font-medium">Affiliate URL (Optional)</Label>
+            <Label htmlFor="affiliateUrl" className="text-ink font-medium">Affiliate URL (Optional)</Label>
             <Input
               id="affiliateUrl"
               type="url"
               placeholder="https://example.com/affiliate?ref=aigentsmith"
               value={formData.affiliateUrl}
               onChange={(e) => setFormData({ ...formData, affiliateUrl: e.target.value })}
-              className="bg-white border-gray-300 text-black placeholder:text-gray-400"
+              className="rounded-lg border-line bg-white text-ink placeholder:text-ink-mute focus-visible:ring-green/30 focus-visible:border-green"
             />
             <p className="text-xs text-gray-500">Your affiliate or referral link if you have one.</p>
           </div>
 
           <div className="space-y-2">
-            <Label className="text-black font-medium">Affiliate Commission (Optional)</Label>
+            <Label className="text-ink font-medium">Affiliate Commission (Optional)</Label>
             <div className="flex gap-2">
               <Input
                 id="affiliateAmount"
@@ -250,18 +250,18 @@ export function SubmitToolForm() {
                 placeholder="e.g., 20"
                 value={formData.affiliateAmount}
                 onChange={(e) => setFormData({ ...formData, affiliateAmount: e.target.value })}
-                className="flex-1 bg-white border-gray-300 text-black placeholder:text-gray-400"
+                className="flex-1 rounded-lg border-line bg-white text-ink placeholder:text-ink-mute focus-visible:ring-green/30 focus-visible:border-green"
               />
               <Select
                 value={formData.affiliateType}
                 onValueChange={(value: "%" | "$") => setFormData({ ...formData, affiliateType: value })}
               >
-                <SelectTrigger className="w-20 bg-white border-gray-300 text-black">
+                <SelectTrigger className="w-20 bg-white border-gray-300 text-ink">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent className="bg-white">
-                  <SelectItem value="%" className="text-black">%</SelectItem>
-                  <SelectItem value="$" className="text-black">$</SelectItem>
+                  <SelectItem value="%" className="text-ink">%</SelectItem>
+                  <SelectItem value="$" className="text-ink">$</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -270,7 +270,7 @@ export function SubmitToolForm() {
 
           {/* Short Description */}
           <div className="space-y-2">
-            <Label htmlFor="shortDescription" className="text-black font-medium">Short Description</Label>
+            <Label htmlFor="shortDescription" className="text-ink font-medium">Short Description</Label>
             <Textarea
               id="shortDescription"
               required
@@ -278,7 +278,7 @@ export function SubmitToolForm() {
               rows={4}
               value={formData.shortDescription}
               onChange={(e) => setFormData({ ...formData, shortDescription: e.target.value })}
-              className="bg-white border-gray-300 text-black placeholder:text-gray-400"
+              className="rounded-lg border-line bg-white text-ink placeholder:text-ink-mute focus-visible:ring-green/30 focus-visible:border-green"
             />
             <p className="text-xs text-gray-500">Keep it concise and compelling.</p>
           </div>
@@ -286,17 +286,17 @@ export function SubmitToolForm() {
           {/* Categories */}
           <div className="grid gap-6 md:grid-cols-3">
             <div className="space-y-2">
-              <Label htmlFor="category1" className="text-black font-medium">Primary Category</Label>
+              <Label htmlFor="category1" className="text-ink font-medium">Primary Category</Label>
               <Select
                 value={formData.category1}
                 onValueChange={(value) => setFormData({ ...formData, category1: value })}
               >
-                <SelectTrigger id="category1" className="bg-white border-gray-300 text-black">
+                <SelectTrigger id="category1" className="bg-white border-gray-300 text-ink">
                   <SelectValue placeholder="Select category" />
                 </SelectTrigger>
                 <SelectContent className="bg-white">
                   {CATEGORIES.map((cat) => (
-                    <SelectItem key={cat} value={cat} className="text-black">
+                    <SelectItem key={cat} value={cat} className="text-ink">
                       {cat}
                     </SelectItem>
                   ))}
@@ -305,17 +305,17 @@ export function SubmitToolForm() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="category2" className="text-black font-medium">Secondary Category (Optional)</Label>
+              <Label htmlFor="category2" className="text-ink font-medium">Secondary Category (Optional)</Label>
               <Select
                 value={formData.category2}
                 onValueChange={(value) => setFormData({ ...formData, category2: value })}
               >
-                <SelectTrigger id="category2" className="bg-white border-gray-300 text-black">
+                <SelectTrigger id="category2" className="bg-white border-gray-300 text-ink">
                   <SelectValue placeholder="Select category" />
                 </SelectTrigger>
                 <SelectContent className="bg-white">
                   {CATEGORIES.map((cat) => (
-                    <SelectItem key={cat} value={cat} className="text-black">
+                    <SelectItem key={cat} value={cat} className="text-ink">
                       {cat}
                     </SelectItem>
                   ))}
@@ -327,7 +327,7 @@ export function SubmitToolForm() {
                   variant="ghost"
                   size="sm"
                   onClick={() => setFormData({ ...formData, category2: "" })}
-                  className="h-6 text-xs text-[#004208]"
+                  className="h-6 text-xs text-green"
                 >
                   Clear
                 </Button>
@@ -335,17 +335,17 @@ export function SubmitToolForm() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="category3" className="text-black font-medium">Tertiary Category (Optional)</Label>
+              <Label htmlFor="category3" className="text-ink font-medium">Tertiary Category (Optional)</Label>
               <Select
                 value={formData.category3}
                 onValueChange={(value) => setFormData({ ...formData, category3: value })}
               >
-                <SelectTrigger id="category3" className="bg-white border-gray-300 text-black">
+                <SelectTrigger id="category3" className="bg-white border-gray-300 text-ink">
                   <SelectValue placeholder="Select category" />
                 </SelectTrigger>
                 <SelectContent className="bg-white">
                   {CATEGORIES.map((cat) => (
-                    <SelectItem key={cat} value={cat} className="text-black">
+                    <SelectItem key={cat} value={cat} className="text-ink">
                       {cat}
                     </SelectItem>
                   ))}
@@ -357,7 +357,7 @@ export function SubmitToolForm() {
                   variant="ghost"
                   size="sm"
                   onClick={() => setFormData({ ...formData, category3: "" })}
-                  className="h-6 text-xs text-[#004208]"
+                  className="h-6 text-xs text-green"
                 >
                   Clear
                 </Button>
@@ -366,14 +366,14 @@ export function SubmitToolForm() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="tags" className="text-black font-medium">Tags (Optional)</Label>
+            <Label htmlFor="tags" className="text-ink font-medium">Tags (Optional)</Label>
             <Select onValueChange={handleAddTag}>
-              <SelectTrigger id="tags" className="bg-white border-gray-300 text-black">
+              <SelectTrigger id="tags" className="bg-white border-gray-300 text-ink">
                 <SelectValue placeholder="Select tags to add" />
               </SelectTrigger>
               <SelectContent className="bg-white">
                 {AVAILABLE_TAGS.filter((tag) => !tags.includes(tag)).map((tag) => (
-                  <SelectItem key={tag} value={tag} className="text-black">
+                  <SelectItem key={tag} value={tag} className="text-ink">
                     {tag}
                   </SelectItem>
                 ))}
@@ -382,12 +382,12 @@ export function SubmitToolForm() {
             {tags.length > 0 && (
               <div className="flex flex-wrap gap-2 mt-3">
                 {tags.map((tag) => (
-                  <Badge key={tag} variant="secondary" className="gap-1 bg-[#004208]/10 text-[#004208] border border-[#004208]/20">
+                  <Badge key={tag} variant="secondary" className="gap-1 bg-green/10 text-green border border-[#0f8a3e]/20">
                     {tag}
                     <button
                       type="button"
                       onClick={() => handleRemoveTag(tag)}
-                      className="ml-1 rounded-full hover:bg-[#004208]/20"
+                      className="ml-1 rounded-full hover:bg-green/20"
                     >
                       <X className="h-3 w-3" />
                     </button>
@@ -399,13 +399,13 @@ export function SubmitToolForm() {
 
           {/* Platforms */}
           <div className="space-y-2">
-            <Label htmlFor="platforms" className="text-black font-medium">Platforms (Optional)</Label>
+            <Label htmlFor="platforms" className="text-ink font-medium">Platforms (Optional)</Label>
             <Input
               id="platforms"
               placeholder="e.g., Web, iOS, Android"
               value={formData.platforms}
               onChange={(e) => setFormData({ ...formData, platforms: e.target.value })}
-              className="bg-white border-gray-300 text-black placeholder:text-gray-400"
+              className="rounded-lg border-line bg-white text-ink placeholder:text-ink-mute focus-visible:ring-green/30 focus-visible:border-green"
             />
           </div>
 
@@ -415,16 +415,16 @@ export function SubmitToolForm() {
                 id="hasPromoCode"
                 checked={formData.hasPromoCode}
                 onCheckedChange={(checked) => setFormData({ ...formData, hasPromoCode: checked as boolean })}
-                className="border-gray-300 data-[state=checked]:bg-[#004208] data-[state=checked]:border-[#004208]"
+                className="border-gray-300 data-[state=checked]:bg-green data-[state=checked]:border-[#0f8a3e]"
               />
-              <Label htmlFor="hasPromoCode" className="cursor-pointer text-black font-medium">
+              <Label htmlFor="hasPromoCode" className="cursor-pointer text-ink font-medium">
                 Promo Code CNFDNT (Optional)
               </Label>
             </div>
 
             {formData.hasPromoCode && (
               <div className="space-y-2 ml-6">
-                <Label className="text-black font-medium">Promo Discount Amount (Optional)</Label>
+                <Label className="text-ink font-medium">Promo Discount Amount (Optional)</Label>
                 <div className="flex gap-2">
                   <Input
                     id="promoAmount"
@@ -434,18 +434,18 @@ export function SubmitToolForm() {
                     placeholder="e.g., 15"
                     value={formData.promoAmount}
                     onChange={(e) => setFormData({ ...formData, promoAmount: e.target.value })}
-                    className="flex-1 bg-white border-gray-300 text-black placeholder:text-gray-400"
+                    className="flex-1 rounded-lg border-line bg-white text-ink placeholder:text-ink-mute focus-visible:ring-green/30 focus-visible:border-green"
                   />
                   <Select
                     value={formData.promoType}
                     onValueChange={(value: "%" | "$") => setFormData({ ...formData, promoType: value })}
                   >
-                    <SelectTrigger className="w-20 bg-white border-gray-300 text-black">
+                    <SelectTrigger className="w-20 bg-white border-gray-300 text-ink">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent className="bg-white">
-                      <SelectItem value="%" className="text-black">%</SelectItem>
-                      <SelectItem value="$" className="text-black">$</SelectItem>
+                      <SelectItem value="%" className="text-ink">%</SelectItem>
+                      <SelectItem value="$" className="text-ink">$</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -462,7 +462,7 @@ export function SubmitToolForm() {
           )}
 
           {/* Submit Button */}
-          <Button type="submit" className="w-full bg-[#004208] hover:bg-[#004208]/90 text-white" disabled={isSubmitting}>
+          <Button type="submit" className="w-full bg-green hover:bg-green-deep text-white" disabled={isSubmitting}>
             {isSubmitting ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />

@@ -37,7 +37,7 @@ export function ImportButton() {
         onClick={handleImport}
         disabled={isImporting}
         size="lg"
-        className="bg-[#004208] text-white hover:bg-[#004208]/90 font-bold uppercase"
+        className="bg-green text-white hover:bg-green/90 font-bold uppercase"
       >
         <Database className="mr-2 h-5 w-5" />
         {isImporting ? "Importing..." : "Import All 583 Tools from CSV"}

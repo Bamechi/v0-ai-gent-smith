@@ -1,160 +1,157 @@
+import Link from "next/link"
+import { ArrowUpRight } from "lucide-react"
 import { createClient } from "@/lib/supabase/server"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
+import { Hero } from "@/components/hero/hero"
+import { SignupBand } from "@/components/signup-band"
 import { FeaturedTool } from "@/components/featured-tool"
 import { ToolsDisplay } from "@/components/tools-display"
 import { StructuredData } from "@/components/structured-data"
-import { BetaSignup } from "@/components/beta-signup"
 import { ImportButton } from "@/components/import-button"
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
-import { Plus, Sparkles } from "lucide-react"
 import type { AITool } from "@/lib/types"
+import { MOCK_TOOLS } from "@/lib/mock-tools"
+
+export const dynamic = "force-dynamic"
 
 export const metadata = {
-  title: "AiGENT SMITH | Discover the Best AI Tools & Applications",
-  description:
-    "The ultimate directory of AI tools and applications. Discover, compare, and find the perfect AI solution for your needs. Browse 500+ AI tools across all categories.",
-  openGraph: {
-    title: "AiGENT SMITH | Discover the Best AI Tools",
-    description: "The ultimate directory of AI tools and applications. Discover 500+ AI tools across all categories.",
-    type: "website",
-  },
+  title: "AiGENT SMITH | The AI tools directory, updated weekly",
+  description: "Every useful AI tool, categorized and vetted in one place. Browse 580+ tools, find your fit in three minutes, and learn the language of AI.",
+}
+
+const isValidTool = (t: AITool) => {
+  const name = (t.app_name || "").trim()
+  if (!name) return false
+  if (/^[A-Z\s]{1,20}$/.test(name) && !/[AEIOU]/i.test(name)) return false
+  if (/^(.{1,3})\1+$/i.test(name) && name.length <= 10) return false
+  if (t.status && t.status !== "published") return false
+  return true
 }
 
 export default async function HomePage() {
-  const supabase = await createClient()
-
-  let featuredTool = null
-
-  const { data: avaData } = await supabase
-    .from("ai_tools")
-    .select("*")
-    .or("app_name.ilike.%ava%,app_name.ilike.%callava%,url.ilike.%callava%")
-    .limit(1)
-    .maybeSingle()
-
-  if (avaData) {
-    featuredTool = avaData
+  let rows: AITool[] = []
+  let featuredRow: AITool | null = null
+  if (process.env.MOCK_TOOLS === "1") {
+    rows = MOCK_TOOLS
   } else {
-    const { data: anyFeatured } = await supabase
-      .from("ai_tools")
-      .select("*")
-      .eq("featured_today", true)
-      .limit(1)
-      .maybeSingle()
-
-    if (anyFeatured) {
-      featuredTool = anyFeatured
-    }
+    const supabase = await createClient()
+    const [f, all] = await Promise.all([
+      supabase.from("ai_tools").select("*").eq("featured_today", true).limit(1).maybeSingle(),
+      supabase.from("ai_tools").select("*").order("app_name", { ascending: true }),
+    ])
+    if (all.error) console.error("[aigent] tools fetch failed:", all.error.message)
+    rows = (all.data as AITool[]) || []
+    featuredRow = (f.data as AITool | null) || null
   }
 
-  const { data: tools, error } = await supabase.from("ai_tools").select("*").order("app_name", { ascending: true })
+  const tools = rows.filter(isValidTool)
+  const featured = featuredRow || tools.find((t) => /callava|^ava ai$/i.test(`${t.url} ${t.app_name}`)) || tools[0] || null
 
-  console.log("[v0] Total tools fetched:", tools?.length || 0)
-  console.log("[v0] Featured tool:", featuredTool?.app_name || "None")
-  if (error) {
-    console.log("[v0] Error fetching tools:", error)
-  }
+  const categories = new Set<string>()
+  for (const t of tools) for (const c of [t.category_1, t.category_2, t.category_3]) if (c) categories.add(c)
+  const tickerNames = tools.slice().sort(() => 0.5 - Math.random()).slice(0, 40).map((t) => t.app_name)
 
   return (
     <>
       <StructuredData type="website" />
-
-      <div className="flex min-h-screen flex-col bg-white">
+      <div className="grid-bg flex min-h-screen flex-col bg-paper text-ink">
         <Header />
-
         <main className="flex-1">
-          <div className="container mx-auto px-4 py-8 space-y-16">
-            <section className="space-y-6 text-center py-16 border-b-2 border-border">
-              <h1 className="text-6xl font-black tracking-tighter sm:text-7xl md:text-8xl leading-[0.95] uppercase">
-                <span className="gradient-text">Discover The Best</span> <br />
-                <span className="text-black">AI Tools</span>
-              </h1>
-              <p className="mx-auto max-w-2xl text-2xl font-black text-black leading-tight">
-                Join the beta and get early access
-              </p>
-              <p className="mx-auto max-w-3xl text-lg mono-description text-black leading-relaxed">
-                The most useful AI tools — organized and categorized in one spot.
-              </p>
-            </section>
+          <Hero toolCount={tools.length} categoryCount={categories.size} names={tickerNames.length ? tickerNames : ["AiGENT SMITH"]} />
 
-            <section className="max-w-xl mx-auto">
-              <Link 
-                href="/survey"
-                className="flex items-center justify-between gap-4 bg-gradient-to-r from-[#e8f5e9] to-[#c8e6c9] border border-[#004208]/20 rounded-lg px-5 py-3 hover:shadow-md transition-shadow group"
-              >
-                <div className="flex items-center gap-3">
-                  <Sparkles className="w-5 h-5 text-[#004208]" />
-                  <span className="font-bold text-sm text-black">Take the 3-Minute AI Tool Finder</span>
-                </div>
-                <span className="text-xs text-[#004208] font-medium group-hover:translate-x-0.5 transition-transform">Free &rarr;</span>
-              </Link>
-            </section>
+          <div className="mx-auto max-w-[1400px] space-y-24 px-5 pb-24 pt-16 sm:px-8 lg:px-12">
+            <section><SignupBand /></section>
 
-            <section className="max-w-2xl mx-auto">
-              <BetaSignup />
-            </section>
-
-            {/* Featured Tool - only show if we have tools */}
-            {featuredTool && (
-              <section className="max-w-6xl mx-auto">
-                <div className="text-center mb-6">
-                  <h2 className="text-4xl font-black uppercase tracking-tight text-black">AI App of the Day</h2>
-                </div>
-                <FeaturedTool tool={featuredTool as AITool} />
+            {featured && (
+              <section id="featured" className="scroll-mt-24 space-y-6">
+                <SectionHead index="01" title="App of the day" note="One tool, one look, every day." />
+                <FeaturedTool tool={featured} />
               </section>
             )}
 
-            {/* Tools Display with Filters and Views */}
-            <section>
-              {tools && tools.length > 0 ? (
-                <ToolsDisplay initialTools={(tools as AITool[]) || []} />
+            <section id="directory" className="scroll-mt-24 space-y-8">
+              <SectionHead index="02" title="The directory" note={`${tools.length} tools across ${categories.size} categories. Press / to search.`} />
+              {tools.length > 0 ? (
+                <ToolsDisplay initialTools={tools} />
               ) : (
-                <div className="text-center py-20 space-y-6">
-                  <h3 className="text-3xl font-black uppercase text-black">No Tools Found</h3>
-                  <p className="mono-description text-lg text-black">
-                    Click the button below to import all 583 AI tools from the CSV file.
-                  </p>
-                  <div className="bg-yellow-50 border-2 border-yellow-400 p-8 rounded-lg max-w-2xl mx-auto space-y-4">
-                    <p className="font-bold text-black text-xl">Quick Setup</p>
-                    <ImportButton />
-                    <p className="text-sm text-black/70 mono-description">
-                      This will import all 583 AI tools from the CSV file directly into your database. Takes about 1-2
-                      minutes.
-                    </p>
-                  </div>
+                <div className="rounded-xl border border-dashed border-line bg-white p-10 text-center">
+                  <p className="font-display text-2xl text-ink">The directory is empty.</p>
+                  <p className="mono-description mt-2 text-ink-mute">Run the SQL in /scripts against Supabase, or import the CSV.</p>
+                  <div className="mt-6"><ImportButton /></div>
                 </div>
               )}
             </section>
 
-            {/* Submit AI Tool section */}
-            {tools && tools.length > 0 && (
-              <section className="bg-black py-16 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
-                <div className="max-w-4xl mx-auto text-center space-y-6">
-                  <h2 className="text-4xl font-black uppercase tracking-tight text-white">Submit AI Tool</h2>
-                  <p className="text-lg mono-description text-white max-w-2xl mx-auto leading-relaxed">
-                    Have an AI tool you'd like to share? Submit it to our directory and help others discover innovative
-                    solutions.
-                  </p>
-                  <Button
-                    asChild
-                    size="lg"
-                    className="font-bold uppercase tracking-wide bg-[#004208] text-white hover:bg-[#004208]/90"
-                  >
-                    <Link href="/submit">
-                      <Plus className="mr-2 h-5 w-5" />
-                      Submit Your Tool
-                    </Link>
-                  </Button>
+            {/* About */}
+            <section id="about" className="scroll-mt-24">
+              <div className="reveal overflow-hidden rounded-2xl border border-line bg-white">
+                <div className="grid md:grid-cols-[1.3fr_1fr]">
+                  <div className="p-7 sm:p-10">
+                    <div className="mono text-[11px] tracking-[0.18em] text-ink-mute">ABOUT</div>
+                    <h2 className="mt-4 font-display text-4xl leading-[0.95] tracking-tight text-ink sm:text-5xl">Built by High Lvl AI.</h2>
+                    <p className="mt-5 max-w-[52ch] font-sans text-ink-soft">
+                      AiGENT SMITH is a living directory of the AI tools worth your time — categorized, vetted, and refreshed every week. It is built and maintained by High Lvl AI, an agency and collective helping creators and operators put AI to work. Want more AI apps, custom builds, or to work with us? Follow up and see what the collective is building.
+                    </p>
+                    <div className="mt-7 flex flex-wrap gap-3">
+                      <a href="https://19keys.com/ai" target="_blank" rel="noopener noreferrer" className="inline-flex h-12 items-center gap-2 rounded-lg bg-ink px-6 font-display text-sm text-white transition-colors hover:bg-green">
+                        More on the collective <ArrowUpRight className="h-4 w-4" />
+                      </a>
+                      <a href="mailto:cnfdnt.ai@gmail.com" className="inline-flex h-12 items-center rounded-lg border border-line px-6 font-sans text-sm text-ink transition-colors hover:border-green hover:text-green">
+                        cnfdnt.ai@gmail.com
+                      </a>
+                    </div>
+                  </div>
+                  <div className="grid-bg-dark relative hidden bg-[radial-gradient(80%_120%_at_70%_0%,#0f3a22,#060806_70%)] md:block">
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="font-display text-[#f2f5f0]" style={{ fontSize: "clamp(2rem,5vw,4rem)", letterSpacing: "-0.04em" }}>
+                        HIGH <span className="text-signal">LVL</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </section>
-            )}
+              </div>
+            </section>
+
+            {/* CTAs */}
+            <section className="grid gap-px overflow-hidden rounded-2xl border border-line bg-line md:grid-cols-3">
+              <Tile index="03" title="Submit a tool" body="Built something worth using? Put it in front of the people who ship." href="/submit" cta="Submit" />
+              <Tile index="04" title="AI Alchemy Dictionary" body="Agents, RAG, MCP, tokens. The vocabulary, in plain English." href="/dictionary" cta="Open the dictionary" />
+              <Tile index="05" title="Join the community" body="CNFDNT members on Ziion get weekly AI trainings and full access." href="https://ziion.io/nations/cnfdnt" cta="Join Ziion" />
+            </section>
           </div>
         </main>
-
         <Footer />
       </div>
     </>
   )
+}
+
+function SectionHead({ index, title, note }: { index: string; title: string; note: string }) {
+  return (
+    <div className="reveal flex flex-wrap items-end justify-between gap-4 border-b border-line pb-5">
+      <div className="flex items-baseline gap-4">
+        <span className="mono text-xs text-green">{index}</span>
+        <h2 className="font-display text-4xl leading-none tracking-tight text-ink sm:text-5xl">{title}</h2>
+      </div>
+      <p className="mono text-xs text-ink-mute">{note}</p>
+    </div>
+  )
+}
+
+function Tile({ index, title, body, href, cta }: { index: string; title: string; body: string; href: string; cta: string }) {
+  const external = href.startsWith("http")
+  const inner = (
+    <>
+      <span className="mono text-xs text-green">{index}</span>
+      <div>
+        <h3 className="font-display text-2xl leading-tight text-ink">{title}</h3>
+        <p className="mt-3 font-sans text-sm text-ink-soft">{body}</p>
+      </div>
+      <span className="inline-flex items-center gap-2 font-display text-sm text-ink group-hover:text-green">{cta} <ArrowUpRight className="h-4 w-4" /></span>
+    </>
+  )
+  const cls = "group flex flex-col justify-between gap-10 bg-white p-7 transition-colors hover:bg-green-tint/40 sm:p-9"
+  return external
+    ? <a href={href} target="_blank" rel="noopener noreferrer" className={cls}>{inner}</a>
+    : <Link href={href} className={cls}>{inner}</Link>
 }

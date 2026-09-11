@@ -262,7 +262,7 @@ function SurveyContent() {
 
   if (results) {
     return (
-      <div className="flex min-h-screen flex-col bg-white">
+      <div className="grid-bg flex min-h-screen flex-col bg-paper pt-16 bg-white">
         <Header />
         <main className="flex-1 container mx-auto px-4 py-12">
           <SurveyResultsPage results={results} answers={answers} />
@@ -273,7 +273,7 @@ function SurveyContent() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-white">
+    <div className="grid-bg flex min-h-screen flex-col bg-paper pt-16 bg-white">
       <Header />
       <main className="flex-1 container mx-auto px-4 py-8 max-w-3xl">
         <div className="space-y-8">
@@ -311,7 +311,7 @@ function SurveyContent() {
               <Button
                 onClick={handleNext}
                 disabled={!canProceed() && currentStep > 3}
-                className="bg-[#004208] hover:bg-[#004208]/90"
+                className="bg-green hover:bg-green-deep"
               >
                 {currentStep === TOTAL_STEPS ? "See My Results" : "Next"}
                 <ArrowRight className="ml-2 w-4 h-4" />

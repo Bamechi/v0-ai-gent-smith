@@ -12,7 +12,7 @@ interface SortDropdownProps {
 export function SortDropdown({ currentSort, onSortChange }: SortDropdownProps) {
   return (
     <Select value={currentSort} onValueChange={(value) => onSortChange(value as SortOption)}>
-      <SelectTrigger className="w-[200px] font-bold">
+      <SelectTrigger className="h-12 w-[190px] rounded-xl border-line bg-white font-sans text-sm text-ink shadow-sm data-[size=default]:h-12">
         <ArrowUpDown className="mr-2 h-4 w-4" />
         <SelectValue placeholder="Sort by" />
       </SelectTrigger>

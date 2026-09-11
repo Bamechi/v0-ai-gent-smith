@@ -1,6 +1,6 @@
 "use server"
 
-import { createClient } from "@/lib/supabase/server"
+import { createAdminClient } from "@/lib/supabase/admin"
 import { revalidatePath } from "next/cache"
 
 interface SubmitToolData {
@@ -16,16 +16,15 @@ interface SubmitToolData {
   promoCode: string
 }
 
+/** Public submissions land as `pending`; the weekly review publishes them. */
 export async function submitTool(data: SubmitToolData) {
   try {
-    const supabase = await createClient()
-
-    // Insert the new tool
+    const supabase = createAdminClient()
     const { error } = await supabase.from("ai_tools").insert({
-      tool_id: data.toolId,
-      app_name: data.appName,
-      url: data.url,
-      short_description: data.shortDescription,
+      tool_id: data.toolId.trim().toLowerCase().replace(/[^a-z0-9_]+/g, "_"),
+      app_name: data.appName.trim(),
+      url: data.url.trim(),
+      short_description: data.shortDescription.trim(),
       category_1: data.category1 || null,
       category_2: data.category2 || null,
       category_3: data.category3 || null,
@@ -34,22 +33,19 @@ export async function submitTool(data: SubmitToolData) {
       promo_code: data.promoCode || null,
       featured_today: false,
       sponsored: false,
+      status: "pending",
+      source_name_or_link: "site-submit-form",
     })
 
     if (error) {
-      console.error("[v0] Error submitting tool:", error)
-      if (error.code === "23505") {
-        return { error: "A tool with this ID already exists. Please use a unique Tool ID." }
-      }
-      return { error: "Failed to submit tool. Please try again." }
+      if (error.code === "23505") return { error: "A tool with this ID already exists. Choose a different Tool ID." }
+      console.error("[aigent] submit failed:", error.message)
+      return { error: "The submission could not be saved. Try again." }
     }
-
-    // Revalidate the home page to show the new tool
     revalidatePath("/")
-
     return { success: true }
-  } catch (error) {
-    console.error("[v0] Unexpected error:", error)
-    return { error: "An unexpected error occurred. Please try again." }
+  } catch (e) {
+    console.error("[aigent] submit error:", e)
+    return { error: "The submission could not be saved. Try again." }
   }
 }

@@ -11,7 +11,7 @@ export const metadata = {
 
 export default function AdvertisePage() {
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="grid-bg flex min-h-screen flex-col bg-paper pt-16">
       {/* Header component for consistent navigation */}
       <Header />
 
@@ -30,16 +30,16 @@ export default function AdvertisePage() {
               Visibility through structure. Reach through relevance.
             </p>
             <div className="flex items-center justify-center gap-4 flex-wrap">
-              <Button size="lg" className="bg-[#004208] hover:bg-[#004208]/90 text-white font-semibold px-8" asChild>
-                <Link href="/contact">
+              <Button size="lg" className="bg-green hover:bg-green-deep text-white font-semibold px-8" asChild>
+                <a href="mailto:cnfdnt.ai@gmail.com">
                   <Mail className="mr-2 h-5 w-5" />
                   Get in touch
-                </Link>
+                </a>
               </Button>
               <Button
                 size="lg"
                 variant="outline"
-                className="border-[#004208] text-[#004208] hover:bg-[#004208]/5 font-semibold px-8 bg-transparent"
+                className="border-green text-green hover:bg-green-tint font-semibold px-8 bg-transparent"
                 asChild
               >
                 <Link href="/submit">
@@ -58,39 +58,39 @@ export default function AdvertisePage() {
 
             <div className="grid md:grid-cols-2 gap-8 mb-12">
               {/* Main value prop card */}
-              <div className="md:col-span-2 bg-gradient-to-br from-[#004208] to-[#006610] rounded-2xl p-8 md:p-10 text-white">
+              <div className="md:col-span-2 bg-gradient-to-br from-[#0f8a3e] to-[#006610] rounded-2xl p-8 md:p-10 text-white">
                 <p className="text-xl md:text-2xl font-light mb-4">AiGENT SMITH is not a newsletter or a trend blog.</p>
                 <p className="text-3xl md:text-4xl font-bold">It's an active discovery system.</p>
                 <p className="text-lg text-white/80 mt-6">People don't come here to browse — they come to decide.</p>
               </div>
 
               {/* Feature cards */}
-              <div className="bg-[#f8faf8] border-2 border-[#004208]/20 rounded-2xl p-6 hover:border-[#004208]/40 hover:shadow-lg transition-all duration-300">
-                <div className="w-12 h-12 rounded-xl bg-[#004208] flex items-center justify-center mb-4">
+              <div className="bg-[#f8faf8] border-2 border-[#0f8a3e]/20 rounded-2xl p-6 hover:border-[#0f8a3e]/40 hover:shadow-lg transition-all duration-300">
+                <div className="w-12 h-12 rounded-xl bg-green flex items-center justify-center mb-4">
                   <Layers className="h-6 w-6 text-white" />
                 </div>
                 <h3 className="text-xl font-bold text-black mb-2">Compared Side-by-Side</h3>
                 <p className="text-neutral-600">Tools are evaluated against real alternatives in context</p>
               </div>
 
-              <div className="bg-[#f8faf8] border-2 border-[#004208]/20 rounded-2xl p-6 hover:border-[#004208]/40 hover:shadow-lg transition-all duration-300">
-                <div className="w-12 h-12 rounded-xl bg-[#004208] flex items-center justify-center mb-4">
+              <div className="bg-[#f8faf8] border-2 border-[#0f8a3e]/20 rounded-2xl p-6 hover:border-[#0f8a3e]/40 hover:shadow-lg transition-all duration-300">
+                <div className="w-12 h-12 rounded-xl bg-green flex items-center justify-center mb-4">
                   <Tag className="h-6 w-6 text-white" />
                 </div>
                 <h3 className="text-xl font-bold text-black mb-2">Categorized by Real Use Case</h3>
                 <p className="text-neutral-600">Not generic labels — actual workflow categories</p>
               </div>
 
-              <div className="bg-[#f8faf8] border-2 border-[#004208]/20 rounded-2xl p-6 hover:border-[#004208]/40 hover:shadow-lg transition-all duration-300">
-                <div className="w-12 h-12 rounded-xl bg-[#004208] flex items-center justify-center mb-4">
+              <div className="bg-[#f8faf8] border-2 border-[#0f8a3e]/20 rounded-2xl p-6 hover:border-[#0f8a3e]/40 hover:shadow-lg transition-all duration-300">
+                <div className="w-12 h-12 rounded-xl bg-green flex items-center justify-center mb-4">
                   <BarChart3 className="h-6 w-6 text-white" />
                 </div>
                 <h3 className="text-xl font-bold text-black mb-2">Evaluated Over Time</h3>
                 <p className="text-neutral-600">Long-term visibility, not fleeting impressions</p>
               </div>
 
-              <div className="bg-[#f8faf8] border-2 border-[#004208]/20 rounded-2xl p-6 hover:border-[#004208]/40 hover:shadow-lg transition-all duration-300">
-                <div className="w-12 h-12 rounded-xl bg-[#004208] flex items-center justify-center mb-4">
+              <div className="bg-[#f8faf8] border-2 border-[#0f8a3e]/20 rounded-2xl p-6 hover:border-[#0f8a3e]/40 hover:shadow-lg transition-all duration-300">
+                <div className="w-12 h-12 rounded-xl bg-green flex items-center justify-center mb-4">
                   <Users className="h-6 w-6 text-white" />
                 </div>
                 <h3 className="text-xl font-bold text-black mb-2">Revisited at Decision Time</h3>
@@ -99,7 +99,7 @@ export default function AdvertisePage() {
             </div>
 
             {/* Bottom highlight */}
-            <div className="text-center bg-[#004208]/5 rounded-2xl p-8 border border-[#004208]/10">
+            <div className="text-center bg-green/5 rounded-2xl p-8 border border-[#0f8a3e]/10">
               <p className="text-lg text-neutral-600 mb-2">This creates a different kind of exposure:</p>
               <p className="text-2xl md:text-3xl font-bold text-black">Intent-driven. Contextual. Repeatable.</p>
             </div>
@@ -124,11 +124,11 @@ export default function AdvertisePage() {
                     "inset 0 2px 4px rgba(255, 255, 255, 0.3), inset 0 -2px 4px rgba(0, 66, 8, 0.1), 0 4px 12px rgba(0, 66, 8, 0.15)",
                 }}
               >
-                <div className="w-12 h-12 rounded-xl bg-[#004208] flex items-center justify-center shrink-0 shadow-md">
+                <div className="w-12 h-12 rounded-xl bg-green flex items-center justify-center shrink-0 shadow-md">
                   <Database className="h-6 w-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-[#004208] text-lg mb-1 drop-shadow-[0_1px_1px_rgba(255,255,255,0.5)]">
+                  <h3 className="font-bold text-green text-lg mb-1 drop-shadow-[0_1px_1px_rgba(255,255,255,0.5)]">
                     Growing AI Tools Registry
                   </h3>
                   <p className="text-[#1a3a1a] font-medium">Updated continuously with new tools and data</p>
@@ -144,11 +144,11 @@ export default function AdvertisePage() {
                     "inset 0 2px 4px rgba(255, 255, 255, 0.3), inset 0 -2px 4px rgba(0, 66, 8, 0.1), 0 4px 12px rgba(0, 66, 8, 0.15)",
                 }}
               >
-                <div className="w-12 h-12 rounded-xl bg-[#004208] flex items-center justify-center shrink-0 shadow-md">
+                <div className="w-12 h-12 rounded-xl bg-green flex items-center justify-center shrink-0 shadow-md">
                   <Tag className="h-6 w-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-[#004208] text-lg mb-1 drop-shadow-[0_1px_1px_rgba(255,255,255,0.5)]">
+                  <h3 className="font-bold text-green text-lg mb-1 drop-shadow-[0_1px_1px_rgba(255,255,255,0.5)]">
                     Category & Tag Discovery
                   </h3>
                   <p className="text-[#1a3a1a] font-medium">Not algorithm feeds — structured, intentional browsing</p>
@@ -164,11 +164,11 @@ export default function AdvertisePage() {
                     "inset 0 2px 4px rgba(255, 255, 255, 0.3), inset 0 -2px 4px rgba(0, 66, 8, 0.1), 0 4px 12px rgba(0, 66, 8, 0.15)",
                 }}
               >
-                <div className="w-12 h-12 rounded-xl bg-[#004208] flex items-center justify-center shrink-0 shadow-md">
+                <div className="w-12 h-12 rounded-xl bg-green flex items-center justify-center shrink-0 shadow-md">
                   <Users className="h-6 w-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-[#004208] text-lg mb-1 drop-shadow-[0_1px_1px_rgba(255,255,255,0.5)]">
+                  <h3 className="font-bold text-green text-lg mb-1 drop-shadow-[0_1px_1px_rgba(255,255,255,0.5)]">
                     Decision-Makers
                   </h3>
                   <p className="text-[#1a3a1a] font-medium">
@@ -186,11 +186,11 @@ export default function AdvertisePage() {
                     "inset 0 2px 4px rgba(255, 255, 255, 0.3), inset 0 -2px 4px rgba(0, 66, 8, 0.1), 0 4px 12px rgba(0, 66, 8, 0.15)",
                 }}
               >
-                <div className="w-12 h-12 rounded-xl bg-[#004208] flex items-center justify-center shrink-0 shadow-md">
+                <div className="w-12 h-12 rounded-xl bg-green flex items-center justify-center shrink-0 shadow-md">
                   <Globe className="h-6 w-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-[#004208] text-lg mb-1 drop-shadow-[0_1px_1px_rgba(255,255,255,0.5)]">
+                  <h3 className="font-bold text-green text-lg mb-1 drop-shadow-[0_1px_1px_rgba(255,255,255,0.5)]">
                     Scaling Infrastructure
                   </h3>
                   <p className="text-[#1a3a1a] font-medium">
@@ -199,7 +199,7 @@ export default function AdvertisePage() {
                 </div>
               </div>
             </div>
-            <p className="text-[#004208]/70 mt-10 text-center text-lg italic">
+            <p className="text-green/70 mt-10 text-center text-lg italic">
               "Advertising here is closer to product placement than traditional ads."
             </p>
           </div>
@@ -213,32 +213,32 @@ export default function AdvertisePage() {
               Formats designed to meet users at the moment of discovery.
             </p>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-              <div className="flex items-center gap-4 p-5 rounded-xl bg-white border-2 border-neutral-200 hover:border-[#004208] hover:shadow-lg transition-all">
-                <div className="w-10 h-10 rounded-lg bg-[#004208] flex items-center justify-center shrink-0">
+              <div className="flex items-center gap-4 p-5 rounded-xl bg-white border-2 border-neutral-200 hover:border-[#0f8a3e] hover:shadow-lg transition-all">
+                <div className="w-10 h-10 rounded-lg bg-green flex items-center justify-center shrink-0">
                   <Rocket className="h-5 w-5 text-white" />
                 </div>
                 <span className="font-semibold text-black">Featured Tool Placement</span>
               </div>
-              <div className="flex items-center gap-4 p-5 rounded-xl bg-white border-2 border-neutral-200 hover:border-[#004208] hover:shadow-lg transition-all">
-                <div className="w-10 h-10 rounded-lg bg-[#004208] flex items-center justify-center shrink-0">
+              <div className="flex items-center gap-4 p-5 rounded-xl bg-white border-2 border-neutral-200 hover:border-[#0f8a3e] hover:shadow-lg transition-all">
+                <div className="w-10 h-10 rounded-lg bg-green flex items-center justify-center shrink-0">
                   <Layers className="h-5 w-5 text-white" />
                 </div>
                 <span className="font-semibold text-black">Sponsored Category Visibility</span>
               </div>
-              <div className="flex items-center gap-4 p-5 rounded-xl bg-white border-2 border-neutral-200 hover:border-[#004208] hover:shadow-lg transition-all">
-                <div className="w-10 h-10 rounded-lg bg-[#004208] flex items-center justify-center shrink-0">
+              <div className="flex items-center gap-4 p-5 rounded-xl bg-white border-2 border-neutral-200 hover:border-[#0f8a3e] hover:shadow-lg transition-all">
+                <div className="w-10 h-10 rounded-lg bg-green flex items-center justify-center shrink-0">
                   <BarChart3 className="h-5 w-5 text-white" />
                 </div>
                 <span className="font-semibold text-black">Product Launch Highlights</span>
               </div>
-              <div className="flex items-center gap-4 p-5 rounded-xl bg-white border-2 border-neutral-200 hover:border-[#004208] hover:shadow-lg transition-all">
-                <div className="w-10 h-10 rounded-lg bg-[#004208] flex items-center justify-center shrink-0">
+              <div className="flex items-center gap-4 p-5 rounded-xl bg-white border-2 border-neutral-200 hover:border-[#0f8a3e] hover:shadow-lg transition-all">
+                <div className="w-10 h-10 rounded-lg bg-green flex items-center justify-center shrink-0">
                   <Database className="h-5 w-5 text-white" />
                 </div>
                 <span className="font-semibold text-black">Directory-Level Sponsorships</span>
               </div>
-              <div className="flex items-center gap-4 p-5 rounded-xl bg-white border-2 border-neutral-200 hover:border-[#004208] hover:shadow-lg transition-all md:col-span-2 lg:col-span-2">
-                <div className="w-10 h-10 rounded-lg bg-[#004208] flex items-center justify-center shrink-0">
+              <div className="flex items-center gap-4 p-5 rounded-xl bg-white border-2 border-neutral-200 hover:border-[#0f8a3e] hover:shadow-lg transition-all md:col-span-2 lg:col-span-2">
+                <div className="w-10 h-10 rounded-lg bg-green flex items-center justify-center shrink-0">
                   <MessageSquare className="h-5 w-5 text-white" />
                 </div>
                 <span className="font-semibold text-black">
@@ -255,7 +255,7 @@ export default function AdvertisePage() {
             <h2 className="text-4xl md:text-5xl font-bold text-black mb-16 text-center">We Keep It Simple.</h2>
             <div className="grid md:grid-cols-3 gap-8">
               <div className="relative bg-white rounded-2xl p-8 border border-neutral-200 shadow-sm">
-                <div className="absolute -top-6 left-8 w-12 h-12 rounded-full bg-[#004208] text-white flex items-center justify-center text-xl font-bold">
+                <div className="absolute -top-6 left-8 w-12 h-12 rounded-full bg-green text-white flex items-center justify-center text-xl font-bold">
                   1
                 </div>
                 <div className="pt-4">
@@ -266,7 +266,7 @@ export default function AdvertisePage() {
                 </div>
               </div>
               <div className="relative bg-white rounded-2xl p-8 border border-neutral-200 shadow-sm">
-                <div className="absolute -top-6 left-8 w-12 h-12 rounded-full bg-[#004208] text-white flex items-center justify-center text-xl font-bold">
+                <div className="absolute -top-6 left-8 w-12 h-12 rounded-full bg-green text-white flex items-center justify-center text-xl font-bold">
                   2
                 </div>
                 <div className="pt-4">
@@ -277,7 +277,7 @@ export default function AdvertisePage() {
                 </div>
               </div>
               <div className="relative bg-white rounded-2xl p-8 border border-neutral-200 shadow-sm">
-                <div className="absolute -top-6 left-8 w-12 h-12 rounded-full bg-[#004208] text-white flex items-center justify-center text-xl font-bold">
+                <div className="absolute -top-6 left-8 w-12 h-12 rounded-full bg-green text-white flex items-center justify-center text-xl font-bold">
                   3
                 </div>
                 <div className="pt-4">
@@ -292,7 +292,7 @@ export default function AdvertisePage() {
         </section>
 
         {/* CTA Section */}
-        <section className="py-24 px-4 bg-[#004208]">
+        <section className="py-24 px-4 bg-green">
           <div className="container mx-auto max-w-3xl text-center">
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Availability</h2>
             <p className="text-white/80 mb-4 text-lg">
@@ -305,8 +305,8 @@ export default function AdvertisePage() {
               conversation.
             </p>
             <div className="flex items-center justify-center gap-4 flex-wrap">
-              <Button size="lg" className="bg-white text-[#004208] hover:bg-white/90 font-semibold px-8" asChild>
-                <Link href="/contact">
+              <Button size="lg" className="bg-white text-green hover:bg-white/90 font-semibold px-8" asChild>
+                <Link href="mailto:cnfdnt.ai@gmail.com">
                   <Mail className="mr-2 h-5 w-5" />
                   Get in touch
                 </Link>

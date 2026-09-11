@@ -1,24 +1,29 @@
 "use client"
 
-import { Input } from "@/components/ui/input"
+import { useEffect, useRef } from "react"
 import { Search } from "lucide-react"
 
-interface SearchBarProps {
-  value: string
-  onChange: (value: string) => void
-}
-
-export function SearchBar({ value, onChange }: SearchBarProps) {
+export function SearchBar({ value, onChange }: { value: string; onChange: (value: string) => void }) {
+  const ref = useRef<HTMLInputElement>(null)
+  useEffect(() => {
+    const k = (e: KeyboardEvent) => {
+      if (e.key === "/" && document.activeElement?.tagName !== "INPUT") { e.preventDefault(); ref.current?.focus() }
+    }
+    window.addEventListener("keydown", k)
+    return () => window.removeEventListener("keydown", k)
+  }, [])
   return (
-    <div className="relative flex-1 max-w-md">
-      <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-black/60" />
-      <Input
+    <label className="relative block w-full">
+      <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-mute" />
+      <input
+        ref={ref}
         type="search"
-        placeholder="Search AI tools..."
+        placeholder="Search tools, categories, tags"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="pl-10 bg-gray-100 text-black placeholder:text-black/50 border-gray-300"
+        className="h-12 w-full rounded-xl border border-line bg-white pl-11 pr-12 font-sans text-sm text-ink shadow-sm placeholder:text-ink-mute focus:border-green focus:outline-none focus:ring-2 focus:ring-green/20"
       />
-    </div>
+      <kbd className="mono pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 rounded border border-line px-1.5 py-0.5 text-[10px] text-ink-mute">/</kbd>
+    </label>
   )
 }

@@ -44,7 +44,7 @@ export function SurveyQuestion({
           placeholder={placeholder}
           value={typeof selected === "string" ? selected : ""}
           onChange={(e) => onSelect(e.target.value)}
-          className="h-14 text-lg text-center border-2 border-gray-200 focus:border-[#004208] rounded-lg text-black placeholder:text-gray-400"
+          className="h-14 text-lg text-center border-2 border-gray-200 focus:border-[#0f8a3e] rounded-lg text-black placeholder:text-gray-400"
           autoFocus
         />
       </div>
@@ -62,8 +62,8 @@ export function SurveyQuestion({
             variant="outline"
             className={cn(
               "h-auto min-h-[56px] px-6 py-4 text-left justify-start text-base font-medium transition-all",
-              "border-2 hover:border-[#004208] hover:bg-[#004208]/5",
-              isSelected(option) && "border-[#004208] bg-[#004208]/10 text-[#004208]",
+              "border-2 hover:border-[#0f8a3e] hover:bg-[#0f8a3e]/5",
+              isSelected(option) && "border-[#0f8a3e] bg-[#0f8a3e]/10 text-[#0f8a3e]",
             )}
             onClick={() => onSelect(option)}
           >
@@ -71,7 +71,7 @@ export function SurveyQuestion({
               <div
                 className={cn(
                   "w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0 transition-all",
-                  isSelected(option) ? "border-[#004208] bg-[#004208]" : "border-gray-300",
+                  isSelected(option) ? "border-[#0f8a3e] bg-[#0f8a3e]" : "border-gray-300",
                 )}
               >
                 {isSelected(option) && <Check className="w-4 h-4 text-white" />}

@@ -44,11 +44,11 @@ export function BetaSignup({ isClubSignup = false }: BetaSignupProps) {
   }
 
   return (
-    <div className="rounded-xl border-2 border-[#004208]/20 bg-gradient-to-br from-[#f0f9f0] to-[#e8f5e9] p-8 md:p-10">
+    <div className="rounded-xl border-2 border-[#0f8a3e]/20 bg-gradient-to-br from-[#f0f9f0] to-[#e8f5e9] p-8 md:p-10">
       <div className="flex flex-col items-center gap-4 text-center">
         <div className="flex items-center gap-2">
-          <Sparkles className="w-5 h-5 text-[#004208]" />
-          <p className="text-sm uppercase tracking-widest text-[#004208]/70 font-semibold">
+          <Sparkles className="w-5 h-5 text-green" />
+          <p className="text-sm uppercase tracking-widest text-green/70 font-semibold">
             {isClubSignup ? "AI Club" : "Beta Access"}
           </p>
         </div>
@@ -60,7 +60,7 @@ export function BetaSignup({ isClubSignup = false }: BetaSignupProps) {
         </p>
 
         {status === "success" ? (
-          <div className="flex items-center gap-2 text-[#004208] bg-[#004208]/10 px-4 py-3 rounded-lg">
+          <div className="flex items-center gap-2 text-green bg-green/10 px-4 py-3 rounded-lg">
             <Check className="w-5 h-5" />
             <span className="font-semibold">{message}</span>
           </div>
@@ -72,7 +72,7 @@ export function BetaSignup({ isClubSignup = false }: BetaSignupProps) {
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
-              className="h-11 text-sm bg-white border-[#004208]/20 text-black placeholder:text-gray-400 focus:border-[#004208] rounded-lg"
+              className="h-11 text-sm bg-white border-[#0f8a3e]/20 text-black placeholder:text-gray-400 focus:border-[#0f8a3e] rounded-lg"
               disabled={status === "loading"}
             />
             <Input
@@ -81,13 +81,13 @@ export function BetaSignup({ isClubSignup = false }: BetaSignupProps) {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="h-11 text-sm bg-white border-[#004208]/20 text-black placeholder:text-gray-400 focus:border-[#004208] rounded-lg"
+              className="h-11 text-sm bg-white border-[#0f8a3e]/20 text-black placeholder:text-gray-400 focus:border-[#0f8a3e] rounded-lg"
               disabled={status === "loading"}
             />
             <Button
               type="submit"
               disabled={status === "loading"}
-              className="h-11 px-6 font-semibold text-sm bg-[#004208] text-white hover:bg-[#004208]/90 rounded-lg whitespace-nowrap"
+              className="h-11 px-6 font-semibold text-sm bg-green text-white hover:bg-green/90 rounded-lg whitespace-nowrap"
             >
               {status === "loading" ? "..." : (
                 <>
